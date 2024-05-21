@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://brfh7551nvc16"]
+
+[ext_resource type="Script" path="res://water2Dsimulation/script/waterGenerator.gd" id="1_5j75m"]
+[ext_resource type="Script" path="res://water2Dsimulation/script/watar.gd" id="1_bdveq"]
+[ext_resource type="Script" path="res://water2Dsimulation/script/camera.gd" id="3_delej"]
+[ext_resource type="Texture2D" uid="uid://bdfcpwmcrcmis" path="res://water2Dsimulation/asset/icon.svg" id="4_0stiv"]
+[ext_resource type="Shader" path="res://water2Dsimulation/script/waterEffect.gdshader" id="6_qhjgq"]
+[ext_resource type="Texture2D" uid="uid://m762u2jupu7y" path="res://water2Dsimulation/asset/part.png" id="7_njyev"]
+[ext_resource type="Shader" path="res://water2Dsimulation/script/pointer.gdshader" id="8_nbdm4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2v82y"]
+shader = ExtResource("6_qhjgq")
+shader_parameter/TG_COLOR = Color(1, 0, 1, 1)
+shader_parameter/color_detect_threshold = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ootnj"]
+shader = ExtResource("8_nbdm4")
+
+[node name="supaWatar" type="Node2D"]
+script = ExtResource("1_bdveq")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 64)
+script = ExtResource("3_delej")
+target_area = Vector2(1152, 1152)
+
+[node name="waterShader" type="Sprite2D" parent="Camera2D"]
+z_index = 1
+material = SubResource("ShaderMaterial_2v82y")
+position = Vector2(-0.00012207, 3.99998)
+scale = Vector2(9.25, 9.0625)
+texture = ExtResource("4_0stiv")
+
+[node name="map" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="map"]
+polygon = PackedVector2Array(-16, 648, 637, 652, 1168, 648, 1174, -1, 1168, -504, 642, -591, 609, -423, 629, -293, 584, -211, 626, -134, 758, -72, 857, -86, 816, -11, 763, 34, 642.841, 82.2676, 695, 222, 820, 284, 912, 479, 676, 519, 724, 576, 346, 643, 171, 503, 295, 372, 438, 290, 584, 525, 568, 421, 529, 324, 616, 289, 608, 181, 595, 82, 629, 0, 703, -64, 577, -99, 524, -198, 462, -380, 558, -460, 714, -535, 442, -576, 2, -506, 0, 102)
+
+[node name="watarGen" type="Marker2D" parent="." groups=["waterGenerator"]]
+position = Vector2(578, -390)
+script = ExtResource("1_5j75m")
+tex = ExtResource("7_njyev")
+spawnRad = 10.0
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="Icon" type="Sprite2D" parent="UI"]
+visible = false
+z_index = 1
+material = SubResource("ShaderMaterial_ootnj")
+scale = Vector2(3, 3)
+texture = ExtResource("7_njyev")
